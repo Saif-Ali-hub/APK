@@ -1,0 +1,19 @@
+{
+  "name": "Arrow Maze — Snake Slither Puzzle",
+  "short_name": "Arrow Maze",
+  "description": "600 solvable procedural arrow maze puzzles with Endless & Daily Challenge modes",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#090d16",
+  "theme_color": "#090d16",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

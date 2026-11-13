@@ -1,0 +1,11 @@
+{
+  "appId": "com.arrowmaze.puzzle",
+  "appName": "Arrow Maze",
+  "webDir": "www",
+  "android": {
+    "allowMixedContent": false,
+    "captureInput": true,
+    "webContentsDebuggingEnabled": false
+  }
+}
+
