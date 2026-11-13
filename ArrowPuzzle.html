@@ -1013,7 +1013,7 @@
     }
 
     /* =========================================================
-       HOME SCREEN / MAIN MENU STYLING
+       HOME SCREEN / MAIN MENU STYLING (STUDIO GRADE)
        ========================================================= */
     .home-screen {
       position: absolute;
@@ -1021,10 +1021,13 @@
       z-index: 55;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      justify-content: space-evenly;
       align-items: center;
-      padding: 24px 18px 20px 18px;
+      padding: 22px 18px 18px 18px;
       background: var(--bg-shell);
+      background-image: 
+        radial-gradient(circle at 50% 16%, rgba(56, 189, 248, 0.12) 0%, transparent 55%),
+        radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.08) 0%, transparent 60%);
       transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1), transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
       overflow-y: auto;
       overscroll-behavior: contain;
@@ -1039,51 +1042,53 @@
       flex-direction: column;
       align-items: center;
       text-align: center;
-      margin-top: 6px;
+      margin: 0;
     }
     .home-logo-wrap {
       position: relative;
-      width: 86px;
-      height: 86px;
-      border-radius: 26px;
+      width: 78px;
+      height: 78px;
+      border-radius: 24px;
       background: var(--card-bg);
-      border: 2px solid var(--border-subtle);
-      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+      border: 1.5px solid rgba(255, 255, 255, 0.14);
+      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.22), 0 0 24px rgba(56, 189, 248, 0.18);
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
       transform: translateZ(0);
-      animation: floatLogo 3.5s ease-in-out infinite;
+      animation: floatLogo 4s ease-in-out infinite;
     }
     @keyframes floatLogo {
       0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-4px); }
+      50% { transform: translateY(-3px); }
     }
     .home-title {
-      font-size: 28px;
+      font-size: 26px;
       font-weight: 900;
       letter-spacing: 2px;
       color: var(--text-main);
       line-height: 1.1;
+      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
     }
     .home-tagline {
       font-size: 11px;
       font-weight: 700;
       color: var(--text-muted);
-      letter-spacing: 1.5px;
+      letter-spacing: 1.6px;
       text-transform: uppercase;
-      margin-top: 4px;
+      margin-top: 3px;
     }
     .home-stats-pill {
-      margin-top: 10px;
-      font-size: 11px;
+      margin-top: 8px;
+      font-size: 11.5px;
       font-weight: 700;
       color: var(--text-muted);
       background: var(--btn-bg);
       border: 1px solid var(--border-subtle);
       padding: 5px 14px;
-      border-radius: 14px;
+      border-radius: 16px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
     }
     .home-menu-actions {
       width: 100%;
@@ -1091,37 +1096,119 @@
       display: flex;
       flex-direction: column;
       gap: 10px;
-      margin: 14px 0;
+      margin: 0;
     }
+
+    /* Mini Maze Interactive Solve-on-Play Card */
+    .home-mini-maze-card {
+      width: 100%;
+      background: var(--card-bg);
+      border: 1.5px solid var(--border-subtle);
+      border-radius: 18px;
+      padding: 9px 12px 6px 12px;
+      cursor: pointer;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+      transition: transform 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease;
+      position: relative;
+      overflow: hidden;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    .home-mini-maze-card:hover {
+      border-color: rgba(56, 189, 248, 0.55);
+      box-shadow: 0 8px 24px rgba(56, 189, 248, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      transform: translateY(-2px);
+    }
+    .home-mini-maze-card:active {
+      transform: scale(0.985);
+    }
+    .home-mini-maze-card.solving {
+      border-color: #10b981;
+      box-shadow: 0 0 28px rgba(16, 185, 129, 0.4), inset 0 0 12px rgba(16, 185, 129, 0.2);
+    }
+    .mini-maze-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2px;
+      padding: 0 2px;
+    }
+    .mini-maze-tag {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .mini-maze-pulse-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 8px #10b981;
+      animation: miniPulseDot 1.8s infinite ease-in-out;
+    }
+    @keyframes miniPulseDot {
+      0%, 100% { opacity: 0.6; transform: scale(0.9); }
+      50% { opacity: 1; transform: scale(1.25); }
+    }
+    .mini-maze-hint {
+      font-size: 10.5px;
+      font-weight: 700;
+      color: #38bdf8;
+      letter-spacing: 0.3px;
+      transition: color 0.2s;
+    }
+    .mini-maze-stage {
+      width: 100%;
+      position: relative;
+    }
+    #home-mini-maze-svg {
+      width: 100%;
+      height: 74px;
+      display: block;
+      overflow: visible;
+    }
+    .mini-arrow {
+      transform-origin: center;
+      will-change: transform, opacity;
+    }
+
     .home-btn-primary {
       width: 100%;
-      background: linear-gradient(135deg, #10b981, #059669);
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
       color: #ffffff;
       border: none;
-      border-radius: 20px;
-      padding: 15px 18px;
+      border-radius: 18px;
+      padding: 13px 18px;
       display: flex;
       align-items: center;
       gap: 14px;
       cursor: pointer;
-      box-shadow: 0 8px 24px rgba(16, 185, 129, 0.35);
+      box-shadow: 0 8px 24px rgba(16, 185, 129, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.25);
       transition: transform 0.12s, box-shadow 0.12s;
+      position: relative;
+      overflow: hidden;
     }
     .home-btn-primary:active {
-      transform: scale(0.97);
-      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
+      transform: scale(0.975);
+      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.28);
     }
     .home-btn-icon {
-      width: 44px;
-      height: 44px;
-      border-radius: 14px;
+      width: 42px;
+      height: 42px;
+      border-radius: 13px;
       background: rgba(255, 255, 255, 0.22);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 20px;
+      font-size: 19px;
       font-weight: 900;
       flex-shrink: 0;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
     }
     .home-btn-text {
       text-align: left;
@@ -1129,14 +1216,14 @@
       overflow: hidden;
     }
     .home-btn-title {
-      font-size: 16px;
+      font-size: 15.5px;
       font-weight: 900;
       letter-spacing: 1px;
     }
     .home-btn-sub {
-      font-size: 12px;
+      font-size: 11.5px;
       font-weight: 600;
-      opacity: 0.9;
+      opacity: 0.92;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -1144,29 +1231,33 @@
     .home-grid-actions {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 10px;
+      gap: 9px;
       width: 100%;
     }
     .home-card-btn {
       background: var(--card-bg);
       border: 1px solid var(--border-subtle);
       border-radius: 16px;
-      padding: 13px 8px;
+      padding: 11px 8px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-      transition: transform 0.15s, border-color 0.15s;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+      transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s;
+    }
+    .home-card-btn:hover {
+      border-color: rgba(56, 189, 248, 0.4);
+      transform: translateY(-1px);
     }
     .home-card-btn:active {
       transform: scale(0.96);
       border-color: var(--arrow-tap);
     }
     .home-card-icon {
-      font-size: 22px;
-      margin-bottom: 3px;
+      font-size: 20px;
+      margin-bottom: 2px;
     }
     .home-card-title {
       font-size: 11px;
@@ -1175,17 +1266,17 @@
       letter-spacing: 0.5px;
     }
     .home-card-sub {
-      font-size: 10px;
+      font-size: 9.5px;
       font-weight: 600;
       color: var(--text-muted);
-      margin-top: 2px;
+      margin-top: 1px;
     }
     .home-footer-toolbar {
       display: flex;
       gap: 14px;
       align-items: center;
       justify-content: center;
-      padding-top: 2px;
+      padding-top: 0;
     }
 
     /* Native Mobile Viewport (Real phones & small screens) */
@@ -1241,11 +1332,21 @@
     <div id="home-screen" class="home-screen">
       <div class="home-header">
         <div class="home-logo-wrap">
-          <svg viewBox="0 0 100 100" width="60" height="60">
-            <path d="M 24 76 L 24 50 L 50 50 L 50 24 L 72 24" fill="none" stroke="#38bdf8" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
+          <svg viewBox="0 0 100 100" width="58" height="58">
+            <defs>
+              <linearGradient id="logo-cyan" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#38bdf8" />
+                <stop offset="100%" stop-color="#0284c7" />
+              </linearGradient>
+              <linearGradient id="logo-coral" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#fb7185" />
+                <stop offset="100%" stop-color="#e11d48" />
+              </linearGradient>
+            </defs>
+            <path d="M 24 76 L 24 50 L 50 50 L 50 24 L 72 24" fill="none" stroke="url(#logo-cyan)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
             <polygon points="78,24 68,18 68,30" fill="#10b981" />
-            <path d="M 76 76 L 76 50 L 60 50" fill="none" stroke="#f43f5e" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
-            <polygon points="56,50 63,45 63,55" fill="#f43f5e" />
+            <path d="M 76 76 L 76 50 L 60 50" fill="none" stroke="url(#logo-coral)" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round" />
+            <polygon points="56,50 63,45 63,55" fill="#fb7185" />
           </svg>
         </div>
         <h1 class="home-title">ARROW MAZE</h1>
@@ -1256,6 +1357,70 @@
       </div>
 
       <div class="home-menu-actions">
+        <!-- Interactive Mini Maze (Directly above Play Button - Solves on Click!) -->
+        <div id="home-mini-maze-card" class="home-mini-maze-card" title="Click to Solve & Play!">
+          <div class="mini-maze-header">
+            <div class="mini-maze-tag">
+              <span class="mini-maze-pulse-dot"></span>
+              <span>MINI LABYRINTH</span>
+            </div>
+            <div class="mini-maze-hint" id="mini-maze-hint">Tap to solve & play ➔</div>
+          </div>
+          <div class="mini-maze-stage">
+            <svg id="home-mini-maze-svg" viewBox="0 0 280 84" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <filter id="mini-shadow" x="-20%" y="-20%" width="140%" height="140%">
+                  <feDropShadow dx="0" dy="2" stdDeviation="2.5" flood-opacity="0.32" />
+                </filter>
+              </defs>
+              <!-- Dot Grid Matrix (3 rows x 9 cols) -->
+              <g class="mini-grid-dots" opacity="0.32">
+                <circle cx="35" cy="18" r="2" fill="var(--border-subtle)" />
+                <circle cx="70" cy="18" r="2" fill="var(--border-subtle)" />
+                <circle cx="105" cy="18" r="2" fill="var(--border-subtle)" />
+                <circle cx="140" cy="18" r="2" fill="var(--border-subtle)" />
+                <circle cx="175" cy="18" r="2" fill="var(--border-subtle)" />
+                <circle cx="215" cy="18" r="2" fill="var(--border-subtle)" />
+                <circle cx="245" cy="18" r="2" fill="var(--border-subtle)" />
+
+                <circle cx="35" cy="42" r="2" fill="var(--border-subtle)" />
+                <circle cx="70" cy="42" r="2" fill="var(--border-subtle)" />
+                <circle cx="105" cy="42" r="2" fill="var(--border-subtle)" />
+                <circle cx="140" cy="42" r="2" fill="var(--border-subtle)" />
+                <circle cx="175" cy="42" r="2" fill="var(--border-subtle)" />
+                <circle cx="215" cy="42" r="2" fill="var(--border-subtle)" />
+                <circle cx="245" cy="42" r="2" fill="var(--border-subtle)" />
+
+                <circle cx="35" cy="66" r="2" fill="var(--border-subtle)" />
+                <circle cx="70" cy="66" r="2" fill="var(--border-subtle)" />
+                <circle cx="105" cy="66" r="2" fill="var(--border-subtle)" />
+                <circle cx="140" cy="66" r="2" fill="var(--border-subtle)" />
+                <circle cx="175" cy="66" r="2" fill="var(--border-subtle)" />
+                <circle cx="215" cy="66" r="2" fill="var(--border-subtle)" />
+                <circle cx="245" cy="66" r="2" fill="var(--border-subtle)" />
+              </g>
+
+              <!-- Arrow 3 (Coral #f43f5e) - Blocked by Arrow 2 at (215, 66) -->
+              <g id="mini-arrow-3" class="mini-arrow" filter="url(#mini-shadow)">
+                <path d="M 70 22 L 70 66 L 178 66" fill="none" stroke="#f43f5e" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round" />
+                <polygon points="186,66 176,60 176,72" fill="#f43f5e" />
+              </g>
+
+              <!-- Arrow 2 (Emerald #10b981) - Blocked by Arrow 1 at (215, 18) -->
+              <g id="mini-arrow-2" class="mini-arrow" filter="url(#mini-shadow)">
+                <path d="M 215 66 L 215 32" fill="none" stroke="#10b981" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round" />
+                <polygon points="215,24 209,34 221,34" fill="#10b981" />
+              </g>
+
+              <!-- Arrow 1 (Cyan #38bdf8) - Free to escape RIGHT! -->
+              <g id="mini-arrow-1" class="mini-arrow" filter="url(#mini-shadow)">
+                <path d="M 105 42 L 175 42 L 175 18 L 210 18" fill="none" stroke="#38bdf8" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round" />
+                <polygon points="218,18 208,12 208,24" fill="#38bdf8" />
+              </g>
+            </svg>
+          </div>
+        </div>
+
         <!-- Big Primary Play Button -->
         <button id="btn-home-play" class="home-btn-primary" type="button">
           <div class="home-btn-icon">▶</div>
@@ -5440,6 +5605,12 @@
 
     /* Home Screen & How-To Elements */
     const homeScreenEl = document.getElementById('home-screen');
+    const homeMiniMazeCard = document.getElementById('home-mini-maze-card');
+    const miniArrow1 = document.getElementById('mini-arrow-1');
+    const miniArrow2 = document.getElementById('mini-arrow-2');
+    const miniArrow3 = document.getElementById('mini-arrow-3');
+    const miniMazeHint = document.getElementById('mini-maze-hint');
+    let isMiniMazeSolving = false;
     const btnHomePlay = document.getElementById('btn-home-play');
     const homePlayTitleEl = document.getElementById('home-play-title');
     const homePlaySubEl = document.getElementById('home-play-sub');
@@ -7543,7 +7714,93 @@
       }
     }
 
+    /* =========================================================
+       MINI MAZE SOLVE-ON-PLAY CONTROLLER
+       ========================================================= */
+    function resetMiniMaze() {
+      isMiniMazeSolving = false;
+      if (homeMiniMazeCard) homeMiniMazeCard.classList.remove('solving');
+      if (miniMazeHint) {
+        miniMazeHint.textContent = 'Tap to solve & play ➔';
+        miniMazeHint.style.color = '#38bdf8';
+      }
+      [miniArrow1, miniArrow2, miniArrow3].forEach(arrow => {
+        if (!arrow) return;
+        if (typeof arrow.getAnimations === 'function') {
+          arrow.getAnimations().forEach(anim => anim.cancel());
+        }
+        arrow.style.transform = '';
+        arrow.style.opacity = '1';
+      });
+    }
+
+    function solveMiniMazeAndPlay(onComplete) {
+      if (isMiniMazeSolving) return;
+      isMiniMazeSolving = true;
+
+      if (homeMiniMazeCard) homeMiniMazeCard.classList.add('solving');
+      if (miniMazeHint) {
+        miniMazeHint.textContent = 'Solving maze... ✨';
+        miniMazeHint.style.color = '#10b981';
+      }
+
+      // Step 1: Arrow 1 (Cyan) shoots RIGHT out of the maze
+      if (miniArrow1) {
+        sound.playTone(520, 0.09, 'sine');
+        miniArrow1.animate([
+          { transform: 'translateX(0)', opacity: 1 },
+          { transform: 'translateX(115px)', opacity: 0 }
+        ], {
+          duration: 220,
+          easing: 'cubic-bezier(0.2, 0.9, 0.3, 1)',
+          fill: 'forwards'
+        });
+      }
+
+      // Step 2 (130ms): Arrow 2 (Emerald) unblocked, shoots straight UP
+      setTimeout(() => {
+        if (miniArrow2) {
+          sound.playTone(680, 0.10, 'triangle');
+          miniArrow2.animate([
+            { transform: 'translateY(0)', opacity: 1 },
+            { transform: 'translateY(-75px)', opacity: 0 }
+          ], {
+            duration: 220,
+            easing: 'cubic-bezier(0.2, 0.9, 0.3, 1)',
+            fill: 'forwards'
+          });
+        }
+      }, 130);
+
+      // Step 3 (260ms): Arrow 3 (Coral) unblocked, shoots straight RIGHT
+      setTimeout(() => {
+        if (miniArrow3) {
+          sound.playTone(860, 0.12, 'sine');
+          miniArrow3.animate([
+            { transform: 'translateX(0)', opacity: 1 },
+            { transform: 'translateX(135px)', opacity: 0 }
+          ], {
+            duration: 220,
+            easing: 'cubic-bezier(0.2, 0.9, 0.3, 1)',
+            fill: 'forwards'
+          });
+        }
+      }, 260);
+
+      // Step 4 (390ms): Victory burst & chime
+      setTimeout(() => {
+        sound.playTone(1050, 0.18, 'sine');
+        if (miniMazeHint) miniMazeHint.textContent = 'Solved! 🎉';
+      }, 390);
+
+      // Step 5 (470ms): Complete and start the level!
+      setTimeout(() => {
+        if (typeof onComplete === 'function') onComplete();
+      }, 470);
+    }
+
     function openHomeScreen() {
+      resetMiniMaze();
       renderHomeScreen();
       if (homeScreenEl) homeScreenEl.classList.remove('hidden');
       sound.playTone(480, 0.08);
@@ -7556,8 +7813,19 @@
 
     if (btnHomePlay) {
       btnHomePlay.addEventListener('click', () => {
-        closeHomeScreen();
-        loadLevel(currentLevelIndex);
+        solveMiniMazeAndPlay(() => {
+          closeHomeScreen();
+          loadLevel(currentLevelIndex);
+        });
+      });
+    }
+
+    if (homeMiniMazeCard) {
+      homeMiniMazeCard.addEventListener('click', () => {
+        solveMiniMazeAndPlay(() => {
+          closeHomeScreen();
+          loadLevel(currentLevelIndex);
+        });
       });
     }
 
