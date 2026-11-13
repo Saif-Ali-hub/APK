@@ -1012,6 +1012,182 @@
       color: var(--arrow-tap);
     }
 
+    /* =========================================================
+       HOME SCREEN / MAIN MENU STYLING
+       ========================================================= */
+    .home-screen {
+      position: absolute;
+      inset: 0;
+      z-index: 55;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 18px 20px 18px;
+      background: var(--bg-shell);
+      transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1), transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+      overflow-y: auto;
+      overscroll-behavior: contain;
+    }
+    .home-screen.hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(0.96) translateY(-8px);
+    }
+    .home-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin-top: 6px;
+    }
+    .home-logo-wrap {
+      position: relative;
+      width: 86px;
+      height: 86px;
+      border-radius: 26px;
+      background: var(--card-bg);
+      border: 2px solid var(--border-subtle);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 12px;
+      transform: translateZ(0);
+      animation: floatLogo 3.5s ease-in-out infinite;
+    }
+    @keyframes floatLogo {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+    }
+    .home-title {
+      font-size: 28px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      color: var(--text-main);
+      line-height: 1.1;
+    }
+    .home-tagline {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+    .home-stats-pill {
+      margin-top: 10px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      background: var(--btn-bg);
+      border: 1px solid var(--border-subtle);
+      padding: 5px 14px;
+      border-radius: 14px;
+    }
+    .home-menu-actions {
+      width: 100%;
+      max-width: 340px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin: 14px 0;
+    }
+    .home-btn-primary {
+      width: 100%;
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #ffffff;
+      border: none;
+      border-radius: 20px;
+      padding: 15px 18px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(16, 185, 129, 0.35);
+      transition: transform 0.12s, box-shadow 0.12s;
+    }
+    .home-btn-primary:active {
+      transform: scale(0.97);
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
+    }
+    .home-btn-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.22);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 900;
+      flex-shrink: 0;
+    }
+    .home-btn-text {
+      text-align: left;
+      flex: 1;
+      overflow: hidden;
+    }
+    .home-btn-title {
+      font-size: 16px;
+      font-weight: 900;
+      letter-spacing: 1px;
+    }
+    .home-btn-sub {
+      font-size: 12px;
+      font-weight: 600;
+      opacity: 0.9;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .home-grid-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      width: 100%;
+    }
+    .home-card-btn {
+      background: var(--card-bg);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 13px 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      transition: transform 0.15s, border-color 0.15s;
+    }
+    .home-card-btn:active {
+      transform: scale(0.96);
+      border-color: var(--arrow-tap);
+    }
+    .home-card-icon {
+      font-size: 22px;
+      margin-bottom: 3px;
+    }
+    .home-card-title {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--text-main);
+      letter-spacing: 0.5px;
+    }
+    .home-card-sub {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+    .home-footer-toolbar {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      justify-content: center;
+      padding-top: 2px;
+    }
+
     /* Native Mobile Viewport (Real phones & small screens) */
     @media (max-width: 500px), (max-height: 750px) {
       body {
@@ -1044,6 +1220,10 @@
         padding-top: 4px;
         gap: 6px;
       }
+      .home-screen {
+        padding-top: max(20px, env(safe-area-inset-top, 20px));
+        padding-bottom: max(16px, env(safe-area-inset-bottom, 16px));
+      }
     }
 
     #confetti {
@@ -1057,9 +1237,75 @@
 <body>
 
   <div id="phone-container">
+    <!-- Beautiful Modern Home Screen / Title Menu -->
+    <div id="home-screen" class="home-screen">
+      <div class="home-header">
+        <div class="home-logo-wrap">
+          <svg viewBox="0 0 100 100" width="60" height="60">
+            <path d="M 24 76 L 24 50 L 50 50 L 50 24 L 72 24" fill="none" stroke="#38bdf8" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
+            <polygon points="78,24 68,18 68,30" fill="#10b981" />
+            <path d="M 76 76 L 76 50 L 60 50" fill="none" stroke="#f43f5e" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+            <polygon points="56,50 63,45 63,55" fill="#f43f5e" />
+          </svg>
+        </div>
+        <h1 class="home-title">ARROW MAZE</h1>
+        <div class="home-tagline">Snake Slither Puzzle</div>
+        <div class="home-stats-pill">
+          <span id="home-stars-readout">⭐ 0 Stars</span> • <span id="home-streak-readout">🔥 0 Streak</span>
+        </div>
+      </div>
+
+      <div class="home-menu-actions">
+        <!-- Big Primary Play Button -->
+        <button id="btn-home-play" class="home-btn-primary" type="button">
+          <div class="home-btn-icon">▶</div>
+          <div class="home-btn-text">
+            <div class="home-btn-title" id="home-play-title">CONTINUE</div>
+            <div class="home-btn-sub" id="home-play-sub">Level 1 • Classic Labyrinth</div>
+          </div>
+        </button>
+
+        <!-- Secondary Action Grid -->
+        <div class="home-grid-actions">
+          <button id="btn-home-levels" class="home-card-btn" type="button">
+            <div class="home-card-icon">🏆</div>
+            <div class="home-card-title">CAMPAIGN</div>
+            <div class="home-card-sub" id="home-unlocked-sub">1 / 600 Levels</div>
+          </button>
+          
+          <button id="btn-home-daily" class="home-card-btn" type="button">
+            <div class="home-card-icon">📅</div>
+            <div class="home-card-title">DAILY PUZZLE</div>
+            <div class="home-card-sub" id="home-daily-sub">Play Today!</div>
+          </button>
+
+          <button id="btn-home-endless" class="home-card-btn" type="button">
+            <div class="home-card-icon">♾️</div>
+            <div class="home-card-title">ENDLESS</div>
+            <div class="home-card-sub">20 Shapes</div>
+          </button>
+
+          <button id="btn-home-stats" class="home-card-btn" type="button">
+            <div class="home-card-icon">📊</div>
+            <div class="home-card-title">STATS</div>
+            <div class="home-card-sub">Combos & Records</div>
+          </button>
+        </div>
+      </div>
+
+      <div class="home-footer-toolbar">
+        <button id="btn-home-theme" class="icon-btn" type="button" title="Toggle Theme">🎨</button>
+        <button id="btn-home-audio" class="icon-btn" type="button" title="Toggle Sound">🔊</button>
+        <button id="btn-home-howto" class="icon-btn" type="button" title="How to Play">❓</button>
+      </div>
+    </div>
+
     <header class="top-bar">
       <div class="top-row">
-        <button id="btn-menu" class="icon-btn" title="Level Select">☰</button>
+        <div style="display: flex; gap: 6px; align-items: center;">
+          <button id="btn-home-nav" class="icon-btn" title="Home Menu">🏠</button>
+          <button id="btn-menu" class="icon-btn" title="Level Select">☰</button>
+        </div>
         <div class="hearts-row">
           <span class="heart-icon" id="heart-1">❤️</span>
           <span class="heart-icon" id="heart-2">❤️</span>
@@ -1249,6 +1495,37 @@
         </div>
         <button id="btn-claim-revive" class="btn-primary hidden" style="background: linear-gradient(135deg, #10b981, #059669); font-size: 15px; padding: 13px 28px;">
           CONTINUE PLAYING ✨
+        </button>
+      </div>
+    </div>
+
+    <!-- How To Play Modal -->
+    <div id="modal-howto" class="modal-overlay hidden">
+      <div class="modal-card" style="max-height: 85vh; overflow-y: auto;">
+        <div class="modal-header">
+          <h3>HOW TO PLAY</h3>
+          <button id="btn-close-howto" class="close-btn">✕</button>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 14px; text-align: left; padding: 10px 4px; font-size: 13px; line-height: 1.5; color: var(--text-main);">
+          <div style="display: flex; gap: 10px; align-items: flex-start;">
+            <div style="font-size: 20px;">🏹</div>
+            <div><strong>Tap Free Arrows:</strong> Arrows fly forward in the direction their head points. Only tap arrows that have an open escape path!</div>
+          </div>
+          <div style="display: flex; gap: 10px; align-items: flex-start;">
+            <div style="font-size: 20px;">💥</div>
+            <div><strong>Avoid Collisions:</strong> If an arrow hits another arrow, it recoils and you lose 1 life (❤️). You have 3 lives!</div>
+          </div>
+          <div style="display: flex; gap: 10px; align-items: flex-start;">
+            <div style="font-size: 20px;">🔍</div>
+            <div><strong>Zoom & Pan:</strong> On big levels, pinch or use the zoom buttons (+ / −) to inspect tricky overlapping sections.</div>
+          </div>
+          <div style="display: flex; gap: 10px; align-items: flex-start;">
+            <div style="font-size: 20px;">🧭</div>
+            <div><strong>Grid & Route Guides:</strong> Toggle the 🧭 GRID button anytime to preview the exact escape paths of every arrow.</div>
+          </div>
+        </div>
+        <button id="btn-howto-gotit" class="btn-primary" style="width: 100%; margin-top: 10px; padding: 12px;">
+          GOT IT, LET'S PLAY! ✨
         </button>
       </div>
     </div>
@@ -5161,6 +5438,26 @@
     const btnLevelJump = document.getElementById('btn-level-jump');
     const unlockedProgressPill = document.getElementById('unlocked-progress-pill');
 
+    /* Home Screen & How-To Elements */
+    const homeScreenEl = document.getElementById('home-screen');
+    const btnHomePlay = document.getElementById('btn-home-play');
+    const homePlayTitleEl = document.getElementById('home-play-title');
+    const homePlaySubEl = document.getElementById('home-play-sub');
+    const homeStarsReadoutEl = document.getElementById('home-stars-readout');
+    const homeStreakReadoutEl = document.getElementById('home-streak-readout');
+    const homeUnlockedSubEl = document.getElementById('home-unlocked-sub');
+    const btnHomeLevels = document.getElementById('btn-home-levels');
+    const btnHomeDaily = document.getElementById('btn-home-daily');
+    const btnHomeEndless = document.getElementById('btn-home-endless');
+    const btnHomeStats = document.getElementById('btn-home-stats');
+    const btnHomeTheme = document.getElementById('btn-home-theme');
+    const btnHomeAudio = document.getElementById('btn-home-audio');
+    const btnHomeHowto = document.getElementById('btn-home-howto');
+    const btnHomeNav = document.getElementById('btn-home-nav');
+    const modalHowto = document.getElementById('modal-howto');
+    const btnCloseHowto = document.getElementById('btn-close-howto');
+    const btnHowtoGotit = document.getElementById('btn-howto-gotit');
+
     /* Theme Initialization */
     function applyTheme(themeName) {
       document.documentElement.setAttribute('data-theme', themeName);
@@ -7180,6 +7477,7 @@
     });
 
     function closeTopModal() {
+      if (modalHowto && !modalHowto.classList.contains('hidden')) { modalHowto.classList.add('hidden'); return true; }
       if (!modalLevels.classList.contains('hidden')) { modalLevels.classList.add('hidden'); return true; }
       if (!modalEndless.classList.contains('hidden')) { modalEndless.classList.add('hidden'); return true; }
       if (!modalStats.classList.contains('hidden')) { modalStats.classList.add('hidden'); return true; }
@@ -7188,12 +7486,18 @@
         restartLevel();
         return true;
       }
+      if (homeScreenEl && homeScreenEl.classList.contains('hidden')) {
+        openHomeScreen();
+        return true;
+      }
       return false;
     }
-    [modalLevels, modalEndless, modalStats].forEach(modalEl => {
-      modalEl.addEventListener('click', (e) => {
-        if (e.target === modalEl) modalEl.classList.add('hidden');
-      });
+    [modalLevels, modalEndless, modalStats, modalHowto].forEach(modalEl => {
+      if (modalEl) {
+        modalEl.addEventListener('click', (e) => {
+          if (e.target === modalEl) modalEl.classList.add('hidden');
+        });
+      }
     });
     window.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') closeTopModal();
@@ -7204,6 +7508,131 @@
           window.Capacitor.Plugins.App.exitApp();
         }
       });
+    }
+
+    /* =========================================================
+       HOME SCREEN CONTROLLER
+       ========================================================= */
+    function renderHomeScreen() {
+      const unlockedMax = saveData.unlockedLevel || 0;
+      const targetLvl = Math.min(currentLevelIndex + 1, TOTAL_LEVELS);
+      const meta = getLevelMeta(targetLvl - 1);
+
+      if (homePlayTitleEl) {
+        homePlayTitleEl.textContent = unlockedMax === 0 ? '▶ START GAME' : `▶ CONTINUE LEVEL ${targetLvl}`;
+      }
+      if (homePlaySubEl) {
+        homePlaySubEl.textContent = `${meta.shapeIcon} ${meta.shapeLabel} • ${meta.arrowCount} Arrows`;
+      }
+      if (homeUnlockedSubEl) {
+        homeUnlockedSubEl.textContent = `${Math.min(TOTAL_LEVELS, unlockedMax + 1)} / ${TOTAL_LEVELS} Cleared`;
+      }
+
+      let totalStars = 0;
+      for (const k in (saveData.stars || {})) {
+        if (Number(k) < TOTAL_LEVELS) totalStars += saveData.stars[k] || 0;
+      }
+      if (homeStarsReadoutEl) {
+        homeStarsReadoutEl.textContent = `⭐ ${totalStars} Stars`;
+      }
+      if (homeStreakReadoutEl) {
+        homeStreakReadoutEl.textContent = `🔥 ${saveData.winStreak || 0} Streak`;
+      }
+      if (btnHomeAudio) {
+        btnHomeAudio.textContent = sound.enabled ? '🔊' : '🔇';
+      }
+    }
+
+    function openHomeScreen() {
+      renderHomeScreen();
+      if (homeScreenEl) homeScreenEl.classList.remove('hidden');
+      sound.playTone(480, 0.08);
+    }
+
+    function closeHomeScreen() {
+      if (homeScreenEl) homeScreenEl.classList.add('hidden');
+      sound.playTone(560, 0.08);
+    }
+
+    if (btnHomePlay) {
+      btnHomePlay.addEventListener('click', () => {
+        closeHomeScreen();
+        loadLevel(currentLevelIndex);
+      });
+    }
+
+    if (btnHomeLevels) {
+      btnHomeLevels.addEventListener('click', () => {
+        closeHomeScreen();
+        openLevelsModal();
+      });
+    }
+
+    if (btnHomeDaily) {
+      btnHomeDaily.addEventListener('click', () => {
+        closeHomeScreen();
+        startDailyChallenge();
+      });
+    }
+
+    if (btnHomeEndless) {
+      btnHomeEndless.addEventListener('click', () => {
+        closeHomeScreen();
+        openEndlessModal();
+      });
+    }
+
+    if (btnHomeStats) {
+      btnHomeStats.addEventListener('click', () => {
+        closeHomeScreen();
+        openStatsModal();
+      });
+    }
+
+    if (btnHomeTheme) {
+      btnHomeTheme.addEventListener('click', () => {
+        const themes = ['light', 'dark', 'zen'];
+        const current = document.documentElement.getAttribute('data-theme') || 'light';
+        const next = themes[(themes.indexOf(current) + 1) % themes.length];
+        applyTheme(next);
+        sound.playTone(480, 0.05);
+      });
+    }
+
+    if (btnHomeAudio) {
+      btnHomeAudio.addEventListener('click', () => {
+        sound.enabled = !sound.enabled;
+        saveData.sound = sound.enabled;
+        saveSaveData(saveData);
+        btnAudio.textContent = sound.enabled ? '🔊' : '🔇';
+        btnHomeAudio.textContent = sound.enabled ? '🔊' : '🔇';
+        if (sound.enabled) sound.playTone(520, 0.08);
+      });
+    }
+
+    if (btnHomeHowto) {
+      btnHomeHowto.addEventListener('click', () => {
+        modalHowto.classList.remove('hidden');
+        sound.playTone(520, 0.08);
+      });
+    }
+
+    if (btnCloseHowto) {
+      btnCloseHowto.addEventListener('click', () => {
+        modalHowto.classList.add('hidden');
+      });
+    }
+
+    if (btnHowtoGotit) {
+      btnHowtoGotit.addEventListener('click', () => {
+        modalHowto.classList.add('hidden');
+        closeHomeScreen();
+        loadLevel(currentLevelIndex);
+      });
+    }
+
+    if (btnHomeNav) {
+      btnHomeNav.addEventListener('click', openHomeScreen);
     }
 
     btnMenu.addEventListener('click', openLevelsModal);
@@ -7515,6 +7944,8 @@
 
     // Initialize Game
     loadLevel(currentLevelIndex);
+    renderHomeScreen();
+    openHomeScreen();
 
     // Register Service Worker for offline PWA installation
     if ('serviceWorker' in navigator) {
