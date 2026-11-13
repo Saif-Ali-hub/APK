@@ -1,4 +1,4 @@
-name: Build Android APK & Deploy Web Game
+name: Build Android APK
 
 on:
   push:
@@ -8,12 +8,6 @@ on:
 
 permissions:
   contents: write
-  pages: write
-  id-token: write
-
-concurrency:
-  group: 'pages'
-  cancel-in-progress: false
 
 jobs:
   build-apk:
@@ -67,7 +61,7 @@ jobs:
           body: |
             🎮 **Arrow Maze — Snake Slither Puzzle Game**
             
-            - 600 Solvable Levels + 20 Shapes
+            - 600 Fully Verified Solvable Levels + 20 Shapes
             - Endless Mode & Daily Challenge
             - Pinch-to-zoom & Route Guides
             
@@ -75,27 +69,3 @@ jobs:
           files: ArrowMaze.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-  deploy-web:
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Sync assets
-        run: node scripts/sync-web.js
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: 'www'
-
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
