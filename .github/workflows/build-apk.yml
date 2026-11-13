@@ -3,7 +3,11 @@ name: Build Android APK
 on:
   push:
     branches: [ main, master ]
+    tags: [ 'v*' ]
   workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   build:
@@ -39,9 +43,30 @@ jobs:
           chmod +x gradlew
           ./gradlew assembleDebug --stacktrace
 
+      - name: Prepare APK
+        run: cp android/app/build/outputs/apk/debug/app-debug.apk ArrowMaze.apk
+
       - name: Upload Debug APK Artifact
         uses: actions/upload-artifact@v4
         with:
           name: ArrowMaze-debug-apk
-          path: android/app/build/outputs/apk/debug/app-debug.apk
+          path: ArrowMaze.apk
+
+      - name: Publish Public GitHub Release
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/') || github.ref == 'refs/heads/main'
+        with:
+          tag_name: v1.0.0
+          name: "Arrow Maze v1.0.0"
+          body: |
+            🎮 **Arrow Maze — Snake Slither Puzzle Game**
+            
+            - 600 Solvable Levels + 20 Shapes
+            - Endless Mode & Daily Challenge
+            - Pinch-to-zoom & Route Guides
+            
+            📥 **Download `ArrowMaze.apk` below and install directly on any Android phone!**
+          files: ArrowMaze.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
