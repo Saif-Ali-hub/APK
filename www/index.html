@@ -7819,10 +7819,9 @@
               headEl.setAttribute('points', getArrowHeadPoints(curPt.x, curPt.y, def.dir));
             }
 
-            // Smooth tail fade out in last 20%
-            if (p > 0.8) {
-              groupEl.style.opacity = `${Math.max(0, (1 - p) / 0.2)}`;
-            }
+            // Continuously reduce opacity as the arrow solves and slithers out (1.0 -> 0.0)
+            const currentOpacity = Math.max(0, 1 - p);
+            groupEl.style.opacity = currentOpacity.toFixed(3);
 
             if (p < 1) {
               requestAnimationFrame(step);
