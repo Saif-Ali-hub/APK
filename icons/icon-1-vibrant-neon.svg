@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b1120" />
+      <stop offset="60%" stop-color="#020617" />
+      <stop offset="100%" stop-color="#000000" />
+    </linearGradient>
+
+    <!-- Neon Cyan to Emerald Gradient -->
+    <linearGradient id="neonCyanEmerald" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="50%" stop-color="#06b6d4" />
+      <stop offset="100%" stop-color="#10b981" />
+    </linearGradient>
+
+    <!-- Neon Coral to Magenta Gradient -->
+    <linearGradient id="neonCoralMagenta" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fb7185" />
+      <stop offset="100%" stop-color="#e11d48" />
+    </linearGradient>
+
+    <!-- Glowing Filters -->
+    <filter id="neonGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="12" result="blur1" />
+      <feGaussianBlur stdDeviation="4" result="blur2" />
+      <feMerge>
+        <feMergeNode in="blur1" />
+        <feMergeNode in="blur2" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+    <filter id="ambientGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="16" stdDeviation="20" flood-color="#06b6d4" flood-opacity="0.25" />
+    </filter>
+  </defs>
+
+  <!-- App Icon Base Squircle -->
+  <rect width="512" height="512" rx="116" fill="url(#bgGrad1)" />
+  <!-- Inner Border Highlight -->
+  <rect x="8" y="8" width="496" height="496" rx="108" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="3" />
+  
+  <!-- Subtle Dot Grid Matrix -->
+  <g fill="#334155" opacity="0.45">
+    <circle cx="116" cy="116" r="6" />
+    <circle cx="186" cy="116" r="6" />
+    <circle cx="256" cy="116" r="6" />
+    <circle cx="326" cy="116" r="6" />
+    <circle cx="396" cy="116" r="6" />
+
+    <circle cx="116" cy="186" r="6" />
+    <circle cx="186" cy="186" r="6" />
+    <circle cx="256" cy="186" r="6" />
+    <circle cx="326" cy="186" r="6" />
+    <circle cx="396" cy="186" r="6" />
+
+    <circle cx="116" cy="256" r="6" />
+    <circle cx="186" cy="256" r="6" />
+    <circle cx="256" cy="256" r="6" />
+    <circle cx="326" cy="256" r="6" />
+    <circle cx="396" cy="256" r="6" />
+
+    <circle cx="116" cy="326" r="6" />
+    <circle cx="186" cy="326" r="6" />
+    <circle cx="256" cy="326" r="6" />
+    <circle cx="326" cy="326" r="6" />
+    <circle cx="396" cy="326" r="6" />
+
+    <circle cx="116" cy="396" r="6" />
+    <circle cx="186" cy="396" r="6" />
+    <circle cx="256" cy="396" r="6" />
+    <circle cx="326" cy="396" r="6" />
+    <circle cx="396" cy="396" r="6" />
+  </g>
+
+  <!-- Ambient Light Reflection -->
+  <ellipse cx="256" cy="100" rx="180" ry="70" fill="#38bdf8" opacity="0.07" filter="blur(30px)" />
+
+  <!-- Arrow 2: Coral Blocked Arrow -->
+  <g opacity="0.9">
+    <path d="M 396 396 L 396 256 L 310 256" fill="none" stroke="url(#neonCoralMagenta)" stroke-width="26" stroke-linecap="round" stroke-linejoin="round" />
+    <polygon points="284,256 318,236 318,276" fill="#fb7185" />
+  </g>
+
+  <!-- Arrow 1: Escaping Cyan Snake (Main Hero Element) -->
+  <g filter="url(#ambientGlow)">
+    <g filter="url(#neonGlow)">
+      <path d="M 116 396 L 116 256 L 256 256 L 256 116 L 380 116" fill="none" stroke="url(#neonCyanEmerald)" stroke-width="32" stroke-linecap="round" stroke-linejoin="round" />
+      <polygon points="414,116 364,88 364,144" fill="#10b981" />
+    </g>
+  </g>
+
+  <!-- Specular Highlights on Arrow Curves -->
+  <circle cx="116" cy="256" r="16" fill="rgba(255,255,255,0.4)" filter="blur(4px)" />
+  <circle cx="256" cy="116" r="16" fill="rgba(255,255,255,0.4)" filter="blur(4px)" />
+</svg>
