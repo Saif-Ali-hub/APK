@@ -22,6 +22,8 @@
       --border-subtle: #e2e8f0;
       --arrow-stroke: #161b33;
       --arrow-head: #161b33;
+      --mini-arrow-stroke: #111827;
+      --mini-arrow-head: #111827;
       --arrow-tap: #2563eb;
       --arrow-hint: #10b981;
       --grid-dot: #cbd5e1;
@@ -47,6 +49,8 @@
       --border-subtle: #1e293b;
       --arrow-stroke: #38bdf8;
       --arrow-head: #38bdf8;
+      --mini-arrow-stroke: #f8fafc;
+      --mini-arrow-head: #f8fafc;
       --arrow-tap: #f43f5e;
       --arrow-hint: #34d399;
       --grid-dot: rgba(148, 163, 184, 0.22);
@@ -72,6 +76,8 @@
       --border-subtle: #e7e0d3;
       --arrow-stroke: #292524;
       --arrow-head: #292524;
+      --mini-arrow-stroke: #18181b;
+      --mini-arrow-head: #18181b;
       --arrow-tap: #15803d;
       --arrow-hint: #059669;
       --grid-dot: #d6cec2;
@@ -1099,82 +1105,59 @@
       margin: 0;
     }
 
-    /* Mini Maze Interactive Solve-on-Play Card */
+    /* Mini Maze Floating Preview (No Background, Pure Arrows) */
     .home-mini-maze-card {
       width: 100%;
-      background: var(--card-bg);
-      border: 1.5px solid var(--border-subtle);
-      border-radius: 18px;
-      padding: 9px 12px 6px 12px;
+      max-width: 320px;
+      align-self: center;
+      background: transparent;
+      border: none;
+      border-radius: 0;
+      padding: 0;
+      margin: 0;
       cursor: pointer;
-      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.06);
-      transition: transform 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease;
+      box-shadow: none;
+      transition: transform 0.16s ease;
       position: relative;
-      overflow: hidden;
+      overflow: visible;
       user-select: none;
       -webkit-user-select: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
     .home-mini-maze-card:hover {
-      border-color: rgba(56, 189, 248, 0.55);
-      box-shadow: 0 8px 24px rgba(56, 189, 248, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.08);
-      transform: translateY(-2px);
+      transform: scale(1.02);
     }
     .home-mini-maze-card:active {
-      transform: scale(0.985);
-    }
-    .home-mini-maze-card.solving {
-      border-color: #10b981;
-      box-shadow: 0 0 28px rgba(16, 185, 129, 0.4), inset 0 0 12px rgba(16, 185, 129, 0.2);
-    }
-    .mini-maze-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 2px;
-      padding: 0 2px;
-    }
-    .mini-maze-tag {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 10px;
-      font-weight: 800;
-      letter-spacing: 1.2px;
-      text-transform: uppercase;
-      color: var(--text-muted);
-    }
-    .mini-maze-pulse-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: #10b981;
-      box-shadow: 0 0 8px #10b981;
-      animation: miniPulseDot 1.8s infinite ease-in-out;
-    }
-    @keyframes miniPulseDot {
-      0%, 100% { opacity: 0.6; transform: scale(0.9); }
-      50% { opacity: 1; transform: scale(1.25); }
-    }
-    .mini-maze-hint {
-      font-size: 10.5px;
-      font-weight: 700;
-      color: #38bdf8;
-      letter-spacing: 0.3px;
-      transition: color 0.2s;
+      transform: scale(0.98);
     }
     .mini-maze-stage {
       width: 100%;
       position: relative;
+      display: flex;
+      justify-content: center;
     }
     #home-mini-maze-svg {
       width: 100%;
-      height: 74px;
+      max-width: 310px;
+      height: 96px;
       display: block;
       overflow: visible;
     }
-    .mini-arrow {
-      transform-origin: center;
+    .mini-arrow-group {
       will-change: transform, opacity;
+      transition: opacity 0.2s ease;
+    }
+    .mini-arrow-path {
+      fill: none;
+      stroke: var(--mini-arrow-stroke, #111827);
+      stroke-width: 5.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .mini-arrow-head {
+      fill: var(--mini-arrow-head, #111827);
     }
 
     .home-btn-primary {
@@ -1366,65 +1349,94 @@
       </div>
 
       <div class="home-menu-actions">
-        <!-- Interactive Mini Maze (Directly above Play Button - Solves on Click!) -->
+        <!-- Floating Mini Maze (Background Removed, Sleek Black Arrows) -->
         <div id="home-mini-maze-card" class="home-mini-maze-card" title="Click to Solve & Play!">
-          <div class="mini-maze-header">
-            <div class="mini-maze-tag">
-              <span class="mini-maze-pulse-dot"></span>
-              <span>MINI LABYRINTH</span>
-            </div>
-            <div class="mini-maze-hint" id="mini-maze-hint">Tap to solve & play ➔</div>
-          </div>
           <div class="mini-maze-stage">
-            <svg id="home-mini-maze-svg" viewBox="0 0 280 84" xmlns="http://www.w3.org/2000/svg">
+            <svg id="home-mini-maze-svg" viewBox="0 0 310 110" xmlns="http://www.w3.org/2000/svg">
               <defs>
                 <filter id="mini-shadow" x="-20%" y="-20%" width="140%" height="140%">
-                  <feDropShadow dx="0" dy="2" stdDeviation="2.5" flood-opacity="0.32" />
+                  <feDropShadow dx="0" dy="1.5" stdDeviation="2" flood-opacity="0.25" />
                 </filter>
               </defs>
-              <!-- Dot Grid Matrix (3 rows x 9 cols) -->
-              <g class="mini-grid-dots" opacity="0.32">
-                <circle cx="35" cy="18" r="2" fill="var(--border-subtle)" />
-                <circle cx="70" cy="18" r="2" fill="var(--border-subtle)" />
-                <circle cx="105" cy="18" r="2" fill="var(--border-subtle)" />
-                <circle cx="140" cy="18" r="2" fill="var(--border-subtle)" />
-                <circle cx="175" cy="18" r="2" fill="var(--border-subtle)" />
-                <circle cx="215" cy="18" r="2" fill="var(--border-subtle)" />
-                <circle cx="245" cy="18" r="2" fill="var(--border-subtle)" />
+              <!-- Clean Background Dot Grid (4 rows x 8 cols) -->
+              <g class="mini-grid-dots" opacity="0.35">
+                <circle cx="30" cy="18" r="1.8" fill="var(--border-subtle)" />
+                <circle cx="68" cy="18" r="1.8" fill="var(--border-subtle)" />
+                <circle cx="106" cy="18" r="1.8" fill="var(--border-subtle)" />
+                <circle cx="144" cy="18" r="1.8" fill="var(--border-subtle)" />
+                <circle cx="182" cy="18" r="1.8" fill="var(--border-subtle)" />
+                <circle cx="220" cy="18" r="1.8" fill="var(--border-subtle)" />
+                <circle cx="258" cy="18" r="1.8" fill="var(--border-subtle)" />
+                <circle cx="286" cy="18" r="1.8" fill="var(--border-subtle)" />
 
-                <circle cx="35" cy="42" r="2" fill="var(--border-subtle)" />
-                <circle cx="70" cy="42" r="2" fill="var(--border-subtle)" />
-                <circle cx="105" cy="42" r="2" fill="var(--border-subtle)" />
-                <circle cx="140" cy="42" r="2" fill="var(--border-subtle)" />
-                <circle cx="175" cy="42" r="2" fill="var(--border-subtle)" />
-                <circle cx="215" cy="42" r="2" fill="var(--border-subtle)" />
-                <circle cx="245" cy="42" r="2" fill="var(--border-subtle)" />
+                <circle cx="30" cy="44" r="1.8" fill="var(--border-subtle)" />
+                <circle cx="68" cy="44" r="1.8" fill="var(--border-subtle)" />
+                <circle cx="106" cy="44" r="1.8" fill="var(--border-subtle)" />
+                <circle cx="144" cy="44" r="1.8" fill="var(--border-subtle)" />
+                <circle cx="182" cy="44" r="1.8" fill="var(--border-subtle)" />
+                <circle cx="220" cy="44" r="1.8" fill="var(--border-subtle)" />
+                <circle cx="258" cy="44" r="1.8" fill="var(--border-subtle)" />
+                <circle cx="286" cy="44" r="1.8" fill="var(--border-subtle)" />
 
-                <circle cx="35" cy="66" r="2" fill="var(--border-subtle)" />
-                <circle cx="70" cy="66" r="2" fill="var(--border-subtle)" />
-                <circle cx="105" cy="66" r="2" fill="var(--border-subtle)" />
-                <circle cx="140" cy="66" r="2" fill="var(--border-subtle)" />
-                <circle cx="175" cy="66" r="2" fill="var(--border-subtle)" />
-                <circle cx="215" cy="66" r="2" fill="var(--border-subtle)" />
-                <circle cx="245" cy="66" r="2" fill="var(--border-subtle)" />
+                <circle cx="30" cy="70" r="1.8" fill="var(--border-subtle)" />
+                <circle cx="68" cy="70" r="1.8" fill="var(--border-subtle)" />
+                <circle cx="106" cy="70" r="1.8" fill="var(--border-subtle)" />
+                <circle cx="144" cy="70" r="1.8" fill="var(--border-subtle)" />
+                <circle cx="182" cy="70" r="1.8" fill="var(--border-subtle)" />
+                <circle cx="220" cy="70" r="1.8" fill="var(--border-subtle)" />
+                <circle cx="258" cy="70" r="1.8" fill="var(--border-subtle)" />
+                <circle cx="286" cy="70" r="1.8" fill="var(--border-subtle)" />
+
+                <circle cx="30" cy="94" r="1.8" fill="var(--border-subtle)" />
+                <circle cx="68" cy="94" r="1.8" fill="var(--border-subtle)" />
+                <circle cx="106" cy="94" r="1.8" fill="var(--border-subtle)" />
+                <circle cx="144" cy="94" r="1.8" fill="var(--border-subtle)" />
+                <circle cx="182" cy="94" r="1.8" fill="var(--border-subtle)" />
+                <circle cx="220" cy="94" r="1.8" fill="var(--border-subtle)" />
+                <circle cx="258" cy="94" r="1.8" fill="var(--border-subtle)" />
+                <circle cx="286" cy="94" r="1.8" fill="var(--border-subtle)" />
               </g>
 
-              <!-- Arrow 3 (Coral #f43f5e) - Blocked by Arrow 2 at (215, 66) -->
-              <g id="mini-arrow-3" class="mini-arrow" filter="url(#mini-shadow)">
-                <path d="M 70 22 L 70 66 L 178 66" fill="none" stroke="#f43f5e" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round" />
-                <polygon points="186,66 176,60 176,72" fill="#f43f5e" />
+              <!-- Arrow M1: points RIGHT -->
+              <g id="group-m1" class="mini-arrow-group" filter="url(#mini-shadow)">
+                <path id="path-m1" class="mini-arrow-path" d="M 106 44 L 182 44 L 182 18 L 258 18" />
+                <polygon id="head-m1" class="mini-arrow-head" points="266,18 258,12 258,24" />
               </g>
 
-              <!-- Arrow 2 (Emerald #10b981) - Blocked by Arrow 1 at (215, 18) -->
-              <g id="mini-arrow-2" class="mini-arrow" filter="url(#mini-shadow)">
-                <path d="M 215 66 L 215 32" fill="none" stroke="#10b981" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round" />
-                <polygon points="215,24 209,34 221,34" fill="#10b981" />
+              <!-- Arrow M2: points UP -->
+              <g id="group-m2" class="mini-arrow-group" filter="url(#mini-shadow)">
+                <path id="path-m2" class="mini-arrow-path" d="M 258 94 L 258 44" />
+                <polygon id="head-m2" class="mini-arrow-head" points="258,36 252,44 264,44" />
               </g>
 
-              <!-- Arrow 1 (Cyan #38bdf8) - Free to escape RIGHT! -->
-              <g id="mini-arrow-1" class="mini-arrow" filter="url(#mini-shadow)">
-                <path d="M 105 42 L 175 42 L 175 18 L 210 18" fill="none" stroke="#38bdf8" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round" />
-                <polygon points="218,18 208,12 208,24" fill="#38bdf8" />
+              <!-- Arrow M3: points RIGHT -->
+              <g id="group-m3" class="mini-arrow-group" filter="url(#mini-shadow)">
+                <path id="path-m3" class="mini-arrow-path" d="M 30 94 L 182 94" />
+                <polygon id="head-m3" class="mini-arrow-head" points="190,94 182,88 182,100" />
+              </g>
+
+              <!-- Arrow M4: points RIGHT -->
+              <g id="group-m4" class="mini-arrow-group" filter="url(#mini-shadow)">
+                <path id="path-m4" class="mini-arrow-path" d="M 30 18 L 30 70 L 106 70" />
+                <polygon id="head-m4" class="mini-arrow-head" points="114,70 106,64 106,76" />
+              </g>
+
+              <!-- Arrow M5: points UP -->
+              <g id="group-m5" class="mini-arrow-group" filter="url(#mini-shadow)">
+                <path id="path-m5" class="mini-arrow-path" d="M 144 70 L 220 70 L 220 44" />
+                <polygon id="head-m5" class="mini-arrow-head" points="220,36 214,44 226,44" />
+              </g>
+
+              <!-- Arrow M6: points DOWN -->
+              <g id="group-m6" class="mini-arrow-group" filter="url(#mini-shadow)">
+                <path id="path-m6" class="mini-arrow-head" d="M 286 44 L 286 94" />
+                <polygon id="head-m6" class="mini-arrow-head" points="286,102 280,94 292,94" />
+              </g>
+
+              <!-- Arrow M7: points LEFT -->
+              <g id="group-m7" class="mini-arrow-group" filter="url(#mini-shadow)">
+                <path id="path-m7" class="mini-arrow-path" d="M 106 18 L 68 18" />
+                <polygon id="head-m7" class="mini-arrow-head" points="60,18 68,12 68,24" />
               </g>
             </svg>
           </div>
@@ -5615,10 +5627,6 @@
     /* Home Screen & How-To Elements */
     const homeScreenEl = document.getElementById('home-screen');
     const homeMiniMazeCard = document.getElementById('home-mini-maze-card');
-    const miniArrow1 = document.getElementById('mini-arrow-1');
-    const miniArrow2 = document.getElementById('mini-arrow-2');
-    const miniArrow3 = document.getElementById('mini-arrow-3');
-    const miniMazeHint = document.getElementById('mini-maze-hint');
     let isMiniMazeSolving = false;
     const btnHomePlay = document.getElementById('btn-home-play');
     const homePlayTitleEl = document.getElementById('home-play-title');
@@ -7724,22 +7732,99 @@
     }
 
     /* =========================================================
-       MINI MAZE SOLVE-ON-PLAY CONTROLLER
+       MINI MAZE SNAKE-STYLE SLITHER CONTROLLER (BLACK ARROWS)
        ========================================================= */
+    const MINI_ARROWS_DEF = [
+      { id: 'm1', points: [[106, 44], [182, 44], [182, 18], [258, 18]], dir: 'RIGHT' },
+      { id: 'm2', points: [[258, 94], [258, 44]], dir: 'UP' },
+      { id: 'm3', points: [[30, 94], [182, 94]], dir: 'RIGHT' },
+      { id: 'm4', points: [[30, 18], [30, 70], [106, 70]], dir: 'RIGHT' },
+      { id: 'm5', points: [[144, 70], [220, 70], [220, 44]], dir: 'UP' },
+      { id: 'm6', points: [[286, 44], [286, 94]], dir: 'DOWN' },
+      { id: 'm7', points: [[106, 18], [68, 18]], dir: 'LEFT' }
+    ];
+
     function resetMiniMaze() {
       isMiniMazeSolving = false;
-      if (homeMiniMazeCard) homeMiniMazeCard.classList.remove('solving');
-      if (miniMazeHint) {
-        miniMazeHint.textContent = 'Tap to solve & play ➔';
-        miniMazeHint.style.color = '#38bdf8';
-      }
-      [miniArrow1, miniArrow2, miniArrow3].forEach(arrow => {
-        if (!arrow) return;
-        if (typeof arrow.getAnimations === 'function') {
-          arrow.getAnimations().forEach(anim => anim.cancel());
+      MINI_ARROWS_DEF.forEach(def => {
+        const pathEl = document.getElementById(`path-${def.id}`);
+        const headEl = document.getElementById(`head-${def.id}`);
+        const groupEl = document.getElementById(`group-${def.id}`);
+        if (!pathEl || !headEl || !groupEl) return;
+
+        let baseD = `M ${def.points[0][0]} ${def.points[0][1]}`;
+        for (let i = 1; i < def.points.length; i++) {
+          baseD += ` L ${def.points[i][0]} ${def.points[i][1]}`;
         }
-        arrow.style.transform = '';
-        arrow.style.opacity = '1';
+        pathEl.setAttribute('d', baseD);
+        pathEl.style.strokeDasharray = '';
+        pathEl.style.strokeDashoffset = '';
+
+        const last = def.points[def.points.length - 1];
+        headEl.setAttribute('points', getArrowHeadPoints(last[0], last[1], def.dir));
+        groupEl.style.opacity = '1';
+      });
+    }
+
+    function slitherMiniArrow(def, delay) {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          const pathEl = document.getElementById(`path-${def.id}`);
+          const headEl = document.getElementById(`head-${def.id}`);
+          const groupEl = document.getElementById(`group-${def.id}`);
+          if (!pathEl || !headEl || !groupEl) { resolve(); return; }
+
+          const totalLength = pathEl.getTotalLength();
+          const lastPt = def.points[def.points.length - 1];
+          let dx = 0, dy = 0;
+          if (def.dir === 'RIGHT') dx = 1;
+          else if (def.dir === 'LEFT') dx = -1;
+          else if (def.dir === 'UP') dy = -1;
+          else if (def.dir === 'DOWN') dy = 1;
+
+          const exitDist = 260;
+          const exitX = lastPt[0] + dx * exitDist;
+          const exitY = lastPt[1] + dy * exitDist;
+
+          let extD = `M ${def.points[0][0]} ${def.points[0][1]}`;
+          for (let i = 1; i < def.points.length; i++) {
+            extD += ` L ${def.points[i][0]} ${def.points[i][1]}`;
+          }
+          extD += ` L ${exitX} ${exitY}`;
+
+          pathEl.setAttribute('d', extD);
+          const newTotalLength = pathEl.getTotalLength();
+          pathEl.style.strokeDasharray = `${totalLength} ${newTotalLength * 2}`;
+          pathEl.style.strokeDashoffset = '0';
+
+          sound.playTone(460 + Math.random() * 260, 0.08, 'sine');
+
+          let startTime = null;
+          const duration = 280;
+
+          function step(now) {
+            if (startTime === null) startTime = now;
+            const elapsed = now - startTime;
+            const p = Math.max(0, Math.min(1, elapsed / duration));
+            const ease = Math.pow(p, 1.6);
+            const dist = ease * (newTotalLength - totalLength);
+            pathEl.style.strokeDashoffset = `${-dist}`;
+
+            const headDist = Math.max(0, Math.min(newTotalLength - 0.1, totalLength + dist));
+            if (Number.isFinite(headDist) && newTotalLength > 0) {
+              const curPt = pathEl.getPointAtLength(headDist);
+              headEl.setAttribute('points', getArrowHeadPoints(curPt.x, curPt.y, def.dir));
+            }
+
+            if (p < 1) {
+              requestAnimationFrame(step);
+            } else {
+              groupEl.style.opacity = '0';
+              resolve();
+            }
+          }
+          requestAnimationFrame(step);
+        }, delay);
       });
     }
 
@@ -7747,65 +7832,17 @@
       if (isMiniMazeSolving) return;
       isMiniMazeSolving = true;
 
-      if (homeMiniMazeCard) homeMiniMazeCard.classList.add('solving');
-      if (miniMazeHint) {
-        miniMazeHint.textContent = 'Solving maze... ✨';
-        miniMazeHint.style.color = '#10b981';
-      }
+      const promises = MINI_ARROWS_DEF.map((def, idx) => slitherMiniArrow(def, idx * 36));
 
-      // Step 1: Arrow 1 (Cyan) shoots RIGHT out of the maze
-      if (miniArrow1) {
-        sound.playTone(520, 0.09, 'sine');
-        miniArrow1.animate([
-          { transform: 'translateX(0)', opacity: 1 },
-          { transform: 'translateX(115px)', opacity: 0 }
-        ], {
-          duration: 220,
-          easing: 'cubic-bezier(0.2, 0.9, 0.3, 1)',
-          fill: 'forwards'
-        });
-      }
-
-      // Step 2 (130ms): Arrow 2 (Emerald) unblocked, shoots straight UP
       setTimeout(() => {
-        if (miniArrow2) {
-          sound.playTone(680, 0.10, 'triangle');
-          miniArrow2.animate([
-            { transform: 'translateY(0)', opacity: 1 },
-            { transform: 'translateY(-75px)', opacity: 0 }
-          ], {
-            duration: 220,
-            easing: 'cubic-bezier(0.2, 0.9, 0.3, 1)',
-            fill: 'forwards'
-          });
-        }
-      }, 130);
-
-      // Step 3 (260ms): Arrow 3 (Coral) unblocked, shoots straight RIGHT
-      setTimeout(() => {
-        if (miniArrow3) {
-          sound.playTone(860, 0.12, 'sine');
-          miniArrow3.animate([
-            { transform: 'translateX(0)', opacity: 1 },
-            { transform: 'translateX(135px)', opacity: 0 }
-          ], {
-            duration: 220,
-            easing: 'cubic-bezier(0.2, 0.9, 0.3, 1)',
-            fill: 'forwards'
-          });
-        }
+        sound.playTone(980, 0.18, 'sine');
       }, 260);
 
-      // Step 4 (390ms): Victory burst & chime
-      setTimeout(() => {
-        sound.playTone(1050, 0.18, 'sine');
-        if (miniMazeHint) miniMazeHint.textContent = 'Solved! 🎉';
-      }, 390);
-
-      // Step 5 (470ms): Complete and start the level!
-      setTimeout(() => {
-        if (typeof onComplete === 'function') onComplete();
-      }, 470);
+      Promise.all(promises).then(() => {
+        setTimeout(() => {
+          if (typeof onComplete === 'function') onComplete();
+        }, 50);
+      });
     }
 
     function openHomeScreen() {
