@@ -308,6 +308,7 @@
       transform-origin: center center;
       will-change: transform;
       user-select: none;
+      overflow: visible;
     }
 
     /* Floating Zoom Controls (Pinch / Wheel / Tap) */
@@ -6130,21 +6131,53 @@
             if (isHoriz && p1y <= tip.y && tip.x >= Math.min(p1x, p2x) - tolerance && tip.x <= Math.max(p1x, p2x) + tolerance) {
               const d = tip.y - p1y;
               if (d >= 0 && d < minDistance) { minDistance = d; blockingArrowId = other.id; }
+            } else if (isVert && Math.abs(p1x - tip.x) <= tolerance) {
+              const minY = Math.min(p1y, p2y), maxY = Math.max(p1y, p2y);
+              if (maxY <= tip.y) {
+                const d = tip.y - maxY;
+                if (d >= 0 && d < minDistance) { minDistance = d; blockingArrowId = other.id; }
+              } else if (minY <= tip.y && maxY >= tip.y) {
+                minDistance = 0; blockingArrowId = other.id;
+              }
             }
           } else if (dir === 'DOWN') {
             if (isHoriz && p1y >= tip.y && tip.x >= Math.min(p1x, p2x) - tolerance && tip.x <= Math.max(p1x, p2x) + tolerance) {
               const d = p1y - tip.y;
               if (d >= 0 && d < minDistance) { minDistance = d; blockingArrowId = other.id; }
+            } else if (isVert && Math.abs(p1x - tip.x) <= tolerance) {
+              const minY = Math.min(p1y, p2y), maxY = Math.max(p1y, p2y);
+              if (minY >= tip.y) {
+                const d = minY - tip.y;
+                if (d >= 0 && d < minDistance) { minDistance = d; blockingArrowId = other.id; }
+              } else if (minY <= tip.y && maxY >= tip.y) {
+                minDistance = 0; blockingArrowId = other.id;
+              }
             }
           } else if (dir === 'LEFT') {
             if (isVert && p1x <= tip.x && tip.y >= Math.min(p1y, p2y) - tolerance && tip.y <= Math.max(p1y, p2y) + tolerance) {
               const d = tip.x - p1x;
               if (d >= 0 && d < minDistance) { minDistance = d; blockingArrowId = other.id; }
+            } else if (isHoriz && Math.abs(p1y - tip.y) <= tolerance) {
+              const minX = Math.min(p1x, p2x), maxX = Math.max(p1x, p2x);
+              if (maxX <= tip.x) {
+                const d = tip.x - maxX;
+                if (d >= 0 && d < minDistance) { minDistance = d; blockingArrowId = other.id; }
+              } else if (minX <= tip.x && maxX >= tip.x) {
+                minDistance = 0; blockingArrowId = other.id;
+              }
             }
           } else if (dir === 'RIGHT') {
             if (isVert && p1x >= tip.x && tip.y >= Math.min(p1y, p2y) - tolerance && tip.y <= Math.max(p1y, p2y) + tolerance) {
               const d = p1x - tip.x;
               if (d >= 0 && d < minDistance) { minDistance = d; blockingArrowId = other.id; }
+            } else if (isHoriz && Math.abs(p1y - tip.y) <= tolerance) {
+              const minX = Math.min(p1x, p2x), maxX = Math.max(p1x, p2x);
+              if (minX >= tip.x) {
+                const d = minX - tip.x;
+                if (d >= 0 && d < minDistance) { minDistance = d; blockingArrowId = other.id; }
+              } else if (minX <= tip.x && maxX >= tip.x) {
+                minDistance = 0; blockingArrowId = other.id;
+              }
             }
           }
         }
