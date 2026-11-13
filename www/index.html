@@ -7732,17 +7732,19 @@
     }
 
     /* =========================================================
-       MINI MAZE SNAKE-STYLE SLITHER CONTROLLER (BLACK ARROWS)
+       MINI MAZE SNAKE-STYLE SLITHER CONTROLLER (BUTTERY SMOOTH)
        ========================================================= */
     const MINI_ARROWS_DEF = [
+      { id: 'm7', points: [[106, 18], [68, 18]], dir: 'LEFT' },
       { id: 'm1', points: [[106, 44], [182, 44], [182, 18], [258, 18]], dir: 'RIGHT' },
-      { id: 'm2', points: [[258, 94], [258, 44]], dir: 'UP' },
-      { id: 'm3', points: [[30, 94], [182, 94]], dir: 'RIGHT' },
-      { id: 'm4', points: [[30, 18], [30, 70], [106, 70]], dir: 'RIGHT' },
       { id: 'm5', points: [[144, 70], [220, 70], [220, 44]], dir: 'UP' },
+      { id: 'm2', points: [[258, 94], [258, 44]], dir: 'UP' },
+      { id: 'm4', points: [[30, 18], [30, 70], [106, 70]], dir: 'RIGHT' },
       { id: 'm6', points: [[286, 44], [286, 94]], dir: 'DOWN' },
-      { id: 'm7', points: [[106, 18], [68, 18]], dir: 'LEFT' }
+      { id: 'm3', points: [[30, 94], [182, 94]], dir: 'RIGHT' }
     ];
+
+    const MINI_CHORD_PITCHES = [440, 493.88, 554.37, 587.33, 659.25, 739.99, 880];
 
     function resetMiniMaze() {
       isMiniMazeSolving = false;
@@ -7766,7 +7768,7 @@
       });
     }
 
-    function slitherMiniArrow(def, delay) {
+    function slitherMiniArrow(def, delay, notePitch) {
       return new Promise((resolve) => {
         setTimeout(() => {
           const pathEl = document.getElementById(`path-${def.id}`);
@@ -7782,7 +7784,7 @@
           else if (def.dir === 'UP') dy = -1;
           else if (def.dir === 'DOWN') dy = 1;
 
-          const exitDist = 260;
+          const exitDist = 200;
           const exitX = lastPt[0] + dx * exitDist;
           const exitY = lastPt[1] + dy * exitDist;
 
@@ -7797,16 +7799,17 @@
           pathEl.style.strokeDasharray = `${totalLength} ${newTotalLength * 2}`;
           pathEl.style.strokeDashoffset = '0';
 
-          sound.playTone(460 + Math.random() * 260, 0.08, 'sine');
+          if (notePitch) sound.playTone(notePitch, 0.09, 'sine');
 
           let startTime = null;
-          const duration = 280;
+          const duration = 400; // Smooth, deliberate 400ms slither glide
 
           function step(now) {
             if (startTime === null) startTime = now;
             const elapsed = now - startTime;
             const p = Math.max(0, Math.min(1, elapsed / duration));
-            const ease = Math.pow(p, 1.6);
+            // Smooth ease-out cubic curve
+            const ease = 1 - Math.pow(1 - p, 2.6);
             const dist = ease * (newTotalLength - totalLength);
             pathEl.style.strokeDashoffset = `${-dist}`;
 
@@ -7814,6 +7817,11 @@
             if (Number.isFinite(headDist) && newTotalLength > 0) {
               const curPt = pathEl.getPointAtLength(headDist);
               headEl.setAttribute('points', getArrowHeadPoints(curPt.x, curPt.y, def.dir));
+            }
+
+            // Smooth tail fade out in last 20%
+            if (p > 0.8) {
+              groupEl.style.opacity = `${Math.max(0, (1 - p) / 0.2)}`;
             }
 
             if (p < 1) {
@@ -7832,16 +7840,18 @@
       if (isMiniMazeSolving) return;
       isMiniMazeSolving = true;
 
-      const promises = MINI_ARROWS_DEF.map((def, idx) => slitherMiniArrow(def, idx * 36));
+      const promises = MINI_ARROWS_DEF.map((def, idx) => 
+        slitherMiniArrow(def, idx * 48, MINI_CHORD_PITCHES[idx % MINI_CHORD_PITCHES.length])
+      );
 
       setTimeout(() => {
-        sound.playTone(980, 0.18, 'sine');
-      }, 260);
+        sound.playTone(1046.5, 0.22, 'sine');
+      }, 340);
 
       Promise.all(promises).then(() => {
         setTimeout(() => {
           if (typeof onComplete === 'function') onComplete();
-        }, 50);
+        }, 80);
       });
     }
 
